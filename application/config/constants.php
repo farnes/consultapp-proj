@@ -49,8 +49,32 @@ define('LEVEL_ERROR', 'error');
 define('LEVEL_DEBUG', 'debug');
 define('LEVEL_INFO', 'info');
 
-/* End of file constants.php */
-/* Location: ./application/config/constants.php */
+/*
+|--------------------------------------------------------------------------
+| Level log message
+|--------------------------------------------------------------------------
+|
+| Define the levels of log 
+|
+*/
 
 define('INFO_SESSION_LOGGIN_IN', 'loggin_in');
 define('INFO_SESSION_USER', 'mail');
+
+/*
+|--------------------------------------------------------------------------
+| Table t_user
+|--------------------------------------------------------------------------
+|
+| Names of tables and fields 
+|
+*/
+
+define('USER_TABLE', 't_user');
+define('USER_TABLE_FIELD_USER_PK', 'user_pk');
+define('USER_TABLE_FIELD_NAME', 'name_vc');
+define('USER_TABLE_FIELD_PASS', 'password_vc');
+define('USER_TABLE_FIELD_ROLE', 'role_int');
+
+/* End of file constants.php */
+/* Location: ./application/config/constants.php */

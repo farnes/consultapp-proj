@@ -49,9 +49,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root_netvinis';
-$db['default']['password'] = 'vinagre';
-$db['default']['database'] = 'db_netvinis_v1';
+$db['default']['username'] = 'root_consultapp';
+$db['default']['password'] = 'consultappv1';
+$db['default']['database'] = 'db_consultapp_v1';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = FALSE;

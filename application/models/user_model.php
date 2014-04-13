@@ -1,6 +1,6 @@
 <?php
 class User_Model extends CI_Model {
-
+	
 	public function __construct(){
 		// Call the Model constructor
 		parent::__construct();
@@ -15,15 +15,23 @@ class User_Model extends CI_Model {
 	
 	public function isUserExist($user,$pass){
 
-		$this->db->select('user_pk');
-		$this->db->from('t_user');
-		$this->db->where('email_vc', $user);
-		$this->db->where('password_vc', $pass);
-		$result = $this->db->get();
-
+		$query = $this->db;		
+		$query->select(USER_TABLE_FIELD_USER_PK);
+		$query->from(USER_TABLE);
+		$query->where(USER_TABLE_FIELD_NAME, $user);
+		$query->where(USER_TABLE_FIELD_PASS, $pass);
+		$result = $query->get();
+	
 		if($result->num_rows()==1){
 			return TRUE;
 		}
+		return FALSE;
+	}
+	
+	public function getUserById($id){
+		/* TODO:
+		 * debe traer los datos por Id
+		 * */ 
 		return FALSE;
 	}
 }
