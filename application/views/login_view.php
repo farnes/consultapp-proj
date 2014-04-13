@@ -12,7 +12,10 @@ $attr_pass = array('id' => 'pass-field','name' => 'pass-field','placeholder' => 
 $attr_submit = array('id' => 'submit-button','name' => 'submit-button','value' => 'Acceder');
 ?>
 <body>
-	<div id="container">
+	<div id="error-container">
+		<?=validation_errors();?>
+	</div>
+	<div id="form-container">
 	<?=form_open('login_controller/loggin',$attr_form);?>
 		<div>
 		<?=form_input($attr_user);?>
