@@ -7,13 +7,13 @@ class User_Model extends CI_Model {
 	}
 	
 	/*
-	 * Method: isUserExist
-	 * Params: user/mail and password
+	 * Method: getIdByUserPass
+	 * Params: user and password
 	 * Description: se fija si existe el usuario/clave de ser asi devuelve
-	 * verdadero y en caso contrario un falso	  
+	 * el campo user_pk y en caso contrario un FALSE	  
 	 */
 	
-	public function isUserExist($user,$pass){
+	public function getIdByUserPass($user,$pass){
 
 		$filter = array(
 			USER_TABLE_FIELD_NAME => $user,
@@ -27,7 +27,7 @@ class User_Model extends CI_Model {
 		->get();		
 			
 		if($query->num_rows()==1){
-			return TRUE;
+			return $query->row()->user_pk;
 		}
 		return FALSE;
 	}

@@ -4,6 +4,7 @@ class Login_Controller extends CI_Controller {
 	
 	private $user_field;
 	private $pass_field;
+	private $id_user;
 
 	public function index(){
 		log_message(LEVEL_ERROR, 'Login_Controller->index()');
@@ -25,7 +26,9 @@ class Login_Controller extends CI_Controller {
 		}
 		
 		$this->getFieldsForm();
-		if(!$this->User_Model->isUserExist($this->user_field,$this->pass_field)){
+		$this->id_user = $this->User_Model->getIdByUserPass($this->user_field,$this->pass_field);
+		log_message(LEVEL_ERROR, 'id_user '.$this->id_user);
+		if(!$this->id_user){			
 			$this->goFormLoggin();
 			return;
 		}
@@ -73,10 +76,10 @@ class Login_Controller extends CI_Controller {
 	private function setRulesValidationForm(){
 		$this->form_validation->set_rules(
 			'user-field', 'Usuario',
-			'trim|required|min_length[5]|max_length[30]');
+			'trim|required|min_length[3]|max_length[30]');
 		$this->form_validation->set_rules(
 			'pass-field', 'Contrase&#241;a',
-			'trim|required|min_length[5]|max_length[30]');
+			'trim|required|min_length[3]|max_length[30]');
 	}
 	
 	private function goHome(){
