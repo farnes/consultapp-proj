@@ -44,7 +44,6 @@ class Login_Controller extends CI_Controller {
 	}
 	
 	public function loggout(){
-		log_message(LEVEL_ERROR, '------------------------------------------');
 		log_message(LEVEL_ERROR, 'Inicio Login_Controller->loggout');
 		if($this->isLogged()){
 			log_message(LEVEL_ERROR, 'if this->isLogged : true');
@@ -53,8 +52,6 @@ class Login_Controller extends CI_Controller {
 				INFO_SESSION_LOGGIN_IN => FALSE
 			);
 			$this->session->unset_userdata($infoSession);
-		}else{
-			log_message(LEVEL_ERROR, 'if this->isLogged : false');
 		}
 		$this->goFormLoggin();
 		log_message(LEVEL_ERROR, 'Fin Login_Controller->loggout');
