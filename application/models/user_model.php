@@ -15,14 +15,18 @@ class User_Model extends CI_Model {
 	
 	public function isUserExist($user,$pass){
 
-		$query = $this->db;		
-		$query->select(USER_TABLE_FIELD_USER_PK);
-		$query->from(USER_TABLE);
-		$query->where(USER_TABLE_FIELD_NAME, $user);
-		$query->where(USER_TABLE_FIELD_PASS, $pass);
-		$result = $query->get();
-	
-		if($result->num_rows()==1){
+		$filter = array(
+			USER_TABLE_FIELD_NAME => $user,
+			USER_TABLE_FIELD_PASS => $pass
+		);		
+		
+		$query = $this->db
+			->select(USER_TABLE_FIELD_USER_PK)
+			->from(USER_TABLE)
+			->where($filter)
+		->get();		
+			
+		if($query->num_rows()==1){
 			return TRUE;
 		}
 		return FALSE;
