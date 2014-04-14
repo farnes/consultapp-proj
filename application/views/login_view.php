@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>NetVinis SocialNetwork - Login</title>
+<title>ConsultApp - Login</title>
 </head>
 <?php
 //valores por defecto
@@ -16,7 +16,7 @@ $attr_submit = array('id' => 'submit-button','name' => 'submit-button','value' =
 		<?=validation_errors();?>
 	</div>
 	<div id="form-container">
-	<?=form_open('login_controller/loggin',$attr_form);?>
+	<?=form_open(site_url().'login_controller/loggin',$attr_form);?>
 		<div>
 		<?=form_input($attr_user);?>
 		</div>

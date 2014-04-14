@@ -73,10 +73,10 @@ class Login_Controller extends CI_Controller {
 	private function setRulesValidationForm(){
 		$this->form_validation->set_rules(
 			'user-field', 'Usuario',
-			'trim|required|min_length[5]|max_length[12]');
+			'trim|required|min_length[5]|max_length[30]');
 		$this->form_validation->set_rules(
-			'pass-field', 'Contraseña',
-			'trim|required');
+			'pass-field', 'Contrase&#241;a',
+			'trim|required|min_length[5]|max_length[30]');
 	}
 	
 	private function goHome(){
