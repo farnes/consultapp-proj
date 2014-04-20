@@ -33,9 +33,17 @@ class User_Model extends CI_Model {
 	}
 	
 	public function getUserById($id){
-		/* TODO:
-		 * debe traer los datos por Id
-		 * */ 
-		return FALSE;
+		
+		$filter = array(
+			USER_TABLE_FIELD_USER_PK => $id
+		);		
+		
+		$query = $this->db
+			->select(USER_TABLE_FIELD_USER_PK)
+			->from(USER_TABLE)
+			->where($filter)
+		->get();		
+				
+		return $query->row();	
 	}
 }

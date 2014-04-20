@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/system"/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
-	<buildpathentry combineaccessrules="false" kind="prj" path="/ConsultApp-Project-CI_Core_2.1.4"/>
 	<buildpathentry kind="src" path=""/>
 </buildpath>
