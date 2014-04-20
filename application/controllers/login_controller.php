@@ -24,7 +24,7 @@ class Login_Controller extends CI_Controller {
 		$user_field = $this->input->post('user-field');
 		$pass_field = $this->input->post('pass-field');
 		$id_user = $this->User_Model->getIdByUserPass($user_field,$pass_field);
-		log_message(LEVEL_DEBUG, 'id_user '.$id_user);
+		
 		if(!$id_user){			
 			$this->goFormLoggin();
 			return;
@@ -41,18 +41,14 @@ class Login_Controller extends CI_Controller {
 	public function loggout(){
 		log_message(LEVEL_DEBUG, 'Login_Controller.loggout.....Inicio');
 		if($this->isLogged()){
-			$infoSession = array(
-				INFO_SESSION_USER=>'',
-				INFO_SESSION_LOGGIN_IN => FALSE
-			);
-			$this->session->unset_userdata($infoSession);
+			$this->cleanSession();
 		}
 		$this->goFormLoggin();
 		log_message(LEVEL_DEBUG, 'Login_Controller.loggout.....Fin');
 		log_message(LEVEL_DEBUG, '------------------------------------------');
 	}
 
-	public function saveSession($id){
+	private function saveSession($id){
 		log_message(LEVEL_DEBUG, 'Login_Controller.saveSession');
 		
 		$data = $this->User_Model->getUserById($id);
@@ -63,6 +59,16 @@ class Login_Controller extends CI_Controller {
 		);
 		
 		$this->session->set_userdata($infoSession);
+	}
+	
+	private function cleanSession(){
+		log_message(LEVEL_DEBUG, 'Login_Controller.cleanSession');		
+		
+		$infoSession = array(
+				INFO_SESSION_USER=>'',
+				INFO_SESSION_LOGGIN_IN => FALSE
+		);
+		$this->session->unset_userdata($infoSession);
 	}
 	
 	public function isLogged(){
