@@ -14,6 +14,7 @@ $attr_submit = array('id' => 'submit-button','name' => 'submit-button','value' =
 <body>
 	<div id="error-container">
 		<?=validation_errors();?>
+		<p><?=$errorMessage;?></p>
 	</div>
 	<div id="form-container">
 	<?=form_open(site_url().'login_controller/loggin',$attr_form);?>

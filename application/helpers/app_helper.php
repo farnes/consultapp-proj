@@ -15,3 +15,16 @@ if(!function_exists('validateSession')){
 		//Fijarse si hay un metodo getUserData para saber si esta loggeado creo q por ahi viene el error
 	}
 }
+
+if(!function_exists('show_errors_app')){
+	function show_errors_app($errorMessage){
+		return;
+	}
+}
+
+if(!function_exists('validate_errors_app')){
+	function validate_errors_app($errorMessage){
+		return;
+	}
+}
+

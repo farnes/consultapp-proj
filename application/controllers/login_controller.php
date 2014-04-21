@@ -25,8 +25,8 @@ class Login_Controller extends CI_Controller {
 		$pass_field = $this->input->post('pass-field');
 		$id_user = $this->User_Model->getIdByUserPass($user_field,$pass_field);
 		
-		if(!$id_user){			
-			$this->goFormLoggin();
+		if(!$id_user){		
+			$this->goFormLogginWithErrorMessage('El usuario o contrase&#241;a no es correcto');
 			return;
 		}
 		
@@ -94,6 +94,11 @@ class Login_Controller extends CI_Controller {
 	
 	private function goFormLoggin(){
 		log_message(LEVEL_DEBUG, 'Login_Controller.goFormLoggin');
-		$this->load->view('login_view');
+		$this->load->view('login_view', array('errorMessage'=>''));
+	}
+	
+	private function goFormLogginWithErrorMessage($message){
+		log_message(LEVEL_DEBUG, 'Login_Controller.goFormLogginWithErrorMessage');
+		$this->load->view('login_view', array('errorMessage'=>$message));
 	}
 }
