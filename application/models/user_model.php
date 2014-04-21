@@ -39,7 +39,7 @@ class User_Model extends CI_Model {
 		);		
 		
 		$query = $this->db
-			->select(USER_TABLE_FIELD_USER_PK)
+			->select()
 			->from(USER_TABLE)
 			->where($filter)
 		->get();		

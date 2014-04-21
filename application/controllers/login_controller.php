@@ -89,7 +89,7 @@ class Login_Controller extends CI_Controller {
 	
 	private function goHome(){
 		log_message(LEVEL_DEBUG, 'Login_Controller.goHome');
-		$this->load->view('home');
+		$this->load->view('home_view');
 	}
 	
 	private function goFormLoggin(){

@@ -6,7 +6,6 @@
 </head>
 
 <body>
-<p>Logueado </p>
-<p><a href="<?=site_url()?>login_controller/loggout">salir del login</a></p>
+	<?php include 'menu.php';?>
 </body>
-</html>
+</html> 
