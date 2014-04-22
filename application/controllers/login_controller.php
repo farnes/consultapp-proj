@@ -1,14 +1,21 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Login_Controller extends CI_Controller {
+	
+	private static $className;
+	
+	public function __construct(){
+		parent::__construct();
+		$this->className = $this->router->fetch_class();
+	}
 
 	public function index(){
-		log_message(LEVEL_DEBUG, 'Login_Controller.index');
+		log_class_method(LEVEL_DEBUG, $this->className , 'index');
 		$this->isLogged()?$this->goHome():$this->goFormLoggin();
 	}
 
 	public function loggin(){
-		log_message(LEVEL_DEBUG, 'Login_Controller.loggin.....Inicio');
+		log_class_method(LEVEL_DEBUG, $this->className , 'loggin.....Inicio');
 
 		if($this->isLogged()){
 			$this->goHome();
@@ -34,22 +41,20 @@ class Login_Controller extends CI_Controller {
 				
 		$this->goHome();
 		
-		log_message(LEVEL_DEBUG, 'Login_Controller.loggin.....Fin');
-		log_message(LEVEL_DEBUG, '------------------------------------------');
+		log_class_method(LEVEL_DEBUG, $this->className , 'loggin.....Fin');
 	}
 	
 	public function loggout(){
-		log_message(LEVEL_DEBUG, 'Login_Controller.loggout.....Inicio');
+		log_class_method(LEVEL_DEBUG, $this->className , 'loggout.....Inicio');
 		if($this->isLogged()){
 			$this->cleanSession();
 		}
 		$this->goFormLoggin();
-		log_message(LEVEL_DEBUG, 'Login_Controller.loggout.....Fin');
-		log_message(LEVEL_DEBUG, '------------------------------------------');
+		log_class_method(LEVEL_DEBUG, $this->className , 'loggout.....Fin');
 	}
 
 	private function saveSession($id){
-		log_message(LEVEL_DEBUG, 'Login_Controller.saveSession');
+		log_class_method(LEVEL_DEBUG, $this->className , 'saveSession');
 		
 		$data = $this->User_Model->getUserById($id);
 		
@@ -62,7 +67,7 @@ class Login_Controller extends CI_Controller {
 	}
 	
 	private function cleanSession(){
-		log_message(LEVEL_DEBUG, 'Login_Controller.cleanSession');		
+		log_class_method(LEVEL_DEBUG, $this->className , 'cleanSession');		
 		
 		$infoSession = array(
 				INFO_SESSION_USER=>'',
@@ -72,13 +77,13 @@ class Login_Controller extends CI_Controller {
 	}
 	
 	public function isLogged(){
-		log_message(LEVEL_DEBUG, 'Login_Controller.isLogged');
+		log_class_method(LEVEL_DEBUG, $this->className , 'isLogged');
 		$result = $this->session->userdata(INFO_SESSION_LOGGIN_IN);		
 		return $result;
 	}
 
 	private function setRulesValidationForm(){
-		log_message(LEVEL_DEBUG, 'Login_Controller.setRulesValidationForm');
+		log_class_method(LEVEL_DEBUG, $this->className , 'setRulesValidationForm');
 		$this->form_validation->set_rules(
 			'user-field', 'Usuario',
 			'trim|required|min_length[3]|max_length[30]');
@@ -88,17 +93,17 @@ class Login_Controller extends CI_Controller {
 	}
 	
 	private function goHome(){
-		log_message(LEVEL_DEBUG, 'Login_Controller.goHome');
+		log_class_method(LEVEL_DEBUG, $this->className , 'goHome');
 		$this->load->view('home_view');
 	}
 	
 	private function goFormLoggin(){
-		log_message(LEVEL_DEBUG, 'Login_Controller.goFormLoggin');
+		log_class_method(LEVEL_DEBUG, $this->className , 'goFormLoggin');
 		$this->load->view('login_view', array('errorMessage'=>''));
 	}
 	
 	private function goFormLogginWithErrorMessage($message){
-		log_message(LEVEL_DEBUG, 'Login_Controller.goFormLogginWithErrorMessage');
+		log_class_method(LEVEL_DEBUG, $this->className , 'goFormLogginWithErrorMessage');
 		$this->load->view('login_view', array('errorMessage'=>$message));
 	}
 }
