@@ -4,9 +4,9 @@ if(!function_exists('validateSession')){
 	function validateSession(){
 		log_message(LEVEL_DEBUG, 'Iniciando Helper funcion validateSession()');
 		$CI =& get_instance();
-		if($CI->session->userdata(INFO_SESSION_LOGGIN_IN)){
+		if(!$CI->session->userdata(INFO_SESSION_LOGGIN_IN)){
 			log_message(LEVEL_DEBUG, 'sesion expirada o no esta logueado');
-			redirect(base_url().'login_controller/loggin');
+			redirect('/login_controller/loggin', 'refresh');
 		}
 	}
 }

@@ -10,7 +10,7 @@ class Add_pdf_controller extends CI_Controller {
 	}
 
 	public function index(){
-		//validateSession();
+		validateSession();
 		log_class_method(LEVEL_DEBUG, $this->className , 'index.....Inicio');		
 		$this->goAddForm();
 	}
