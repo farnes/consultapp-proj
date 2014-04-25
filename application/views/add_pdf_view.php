@@ -40,7 +40,7 @@ $attr_submit = array('id' => 'submit-button','name' => 'submit-button','value' =
 		<?=form_input($attr_year);?>
 		</div>
 		<div>
-		<?=form_submit($attr_select_file);?>
+		<?=form_upload($attr_select_file);?>
 		</div>
 		<div>
 		<?=form_submit($attr_submit);?>
