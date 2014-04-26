@@ -6,7 +6,7 @@
 </head>
 <?php
 //valores por defecto
-$attr_form = array('name' => 'add-pdf-form', 'id' => 'add-pdf-form', 'action' => site_url().'add_pdf_controller/add' , 'method'=>'POST');
+$attr_form = array('name' => 'add-pdf-form', 'id' => 'add-pdf-form', 'method'=>'POST');
 $attr_code = array('id' => 'code-field','name' => 'code-field','placeholder' => 'Codigo');
 $attr_name = array('id' => 'name-field','name' => 'name-field','placeholder' => 'Nombre');
 $attr_date = array('id' => 'date-field', 'name' => 'date-field', 'placeholder' => 'Fecha en dia-mes-a&#241;o');
@@ -21,7 +21,7 @@ $attr_submit = array('id' => 'submit-button','name' => 'submit-button','value' =
 		<p><?=$errorMessage;?></p>
 	</div>
 	<div id="form-container">
-	<?=form_open_multipart($attr_form);?>
+	<?=form_open_multipart(site_url().'add_pdf_controller/add' ,$attr_form);?>
 		<div>
 		<?=form_input($attr_code);?>
 		</div>
