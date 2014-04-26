@@ -26,6 +26,13 @@ class Add_pdf_controller extends CI_Controller {
 		$day_field = $this->input->post('day-field');
 		$month_field = $this->input->post('month-field');
 		$year_field = $this->input->post('year-field');
+		$date_field = $this->input->post('date-field');
+		
+		$this->setRulesValidationForm();
+		if ($this->form_validation->run() == FALSE){
+			$this->goAddForm();
+			return;
+		}
 		
 		$this->prepareFileConf($day_field, $month_field, $year_field, $code_field, $name_field);
 		$loadCorrectly = $this->upload->do_upload('upload-field');
@@ -49,6 +56,13 @@ class Add_pdf_controller extends CI_Controller {
 		$this->upload->initialize($this->uploadFileConf);
 	}
 	
+	private function setRulesValidationForm(){
+		$this->form_validation->set_rules(
+				'date-field', 'Fecha', 
+				'regex_match[#^[0-9]{2}/[0-9]{2}/[0-9]{4}$#]'
+		);
+	}
+	
 	private function goAddForm(){
 		log_class_method(LEVEL_DEBUG, $this->className, 'goAddForm');
 		$this->load->view('add_pdf_view', array('errorMessage'=>''));
@@ -62,5 +76,9 @@ class Add_pdf_controller extends CI_Controller {
 	private function goSuccess(){
 		log_class_method(LEVEL_DEBUG, $this->className, 'goSuccess');
 		$this->load->view('success_view');		
+	}
+	
+	public function dummy(){
+		return;	
 	}
 }
