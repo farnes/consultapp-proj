@@ -23,9 +23,6 @@ class Add_pdf_controller extends CI_Controller {
 		validateSession();
 		$code_field = $this->input->post('code-field');
 		$name_field = $this->input->post('name-field');
-		$day_field = $this->input->post('day-field');
-		$month_field = $this->input->post('month-field');
-		$year_field = $this->input->post('year-field');
 		$date_field = $this->input->post('date-field');
 		
 		$this->setRulesValidationForm();
@@ -58,8 +55,14 @@ class Add_pdf_controller extends CI_Controller {
 	
 	private function setRulesValidationForm(){
 		$this->form_validation->set_rules(
+				'code-field', 'Codigo',
+				'trim|required');
+		$this->form_validation->set_rules(
+				'name-field', 'Nombre',
+				'required');
+		$this->form_validation->set_rules(
 				'date-field', 'Fecha', 
-				'regex_match[#^[0-9]{2}/[0-9]{2}/[0-9]{4}$#]'
+				'required|regex_match[#^[0-9]{2}/[0-9]{2}/[0-9]{4}$#]'
 		);
 	}
 	
