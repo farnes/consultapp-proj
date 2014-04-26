@@ -42,7 +42,7 @@ class Add_pdf_controller extends CI_Controller {
 	
 	private function prepareFileConf($day,$month,$year,$code,$name){
 		
-		$folder = './uploads/'.$year.$month.$day.'/';
+		$folder = './uploads/pdf_files/'.$year.$month.$day.'/';
 		if(!is_dir($folder))mkdir($folder, 0777, true);		
 		$this->uploadFileConf['upload_path'] = $folder;
 		$this->uploadFileConf['file_name'] = $code.'_'.$name;
