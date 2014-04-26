@@ -3,6 +3,7 @@
 class Add_pdf_controller extends CI_Controller {
 	
 	private static $className;
+	private $uploadFileConf = array('allowed_types'=>'pdf|doc|docx','max_size' => '10240');
 	
 	public function __construct(){
 		parent::__construct();
@@ -25,7 +26,8 @@ class Add_pdf_controller extends CI_Controller {
 		$day_field = $this->input->post('day-field');
 		$month_field = $this->input->post('month-field');
 		$year_field = $this->input->post('year-field');
-		//$loadCorrectly = $this->upload->do_upload($year_field.$month_field.$day_field.'_'.$code_field.'_'.$name_field);
+		
+		$this->prepareFileConf($day_field, $month_field, $year_field, $code_field, $name_field);
 		$loadCorrectly = $this->upload->do_upload('upload-field');
 		if (!$loadCorrectly){
 			$this->goAddFormWithErrorMessage($this->upload->display_errors());				
@@ -36,6 +38,15 @@ class Add_pdf_controller extends CI_Controller {
 		
 		$this->goSuccess();
 		log_class_method(LEVEL_DEBUG, $this->className, 'add.....Fin');
+	}
+	
+	private function prepareFileConf($day,$month,$year,$code,$name){
+		
+		$folder = './uploads/'.$year.$month.$day.'/';
+		if(!is_dir($folder))mkdir($folder, 0777, true);		
+		$this->uploadFileConf['upload_path'] = $folder;
+		$this->uploadFileConf['file_name'] = $code.'_'.$name;
+		$this->upload->initialize($this->uploadFileConf);
 	}
 	
 	private function goAddForm(){
