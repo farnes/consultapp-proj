@@ -61,6 +61,8 @@ define('LEVEL_INFO', 'info');
 define('INFO_SESSION_LOGGIN_IN', 'loggin_in');
 define('INFO_SESSION_USER', 'mail');
 
+define('DATE_PATTERN', '#^[0-9]{2}/[0-9]{2}/[0-9]{4}$#');
+
 /*
 |--------------------------------------------------------------------------
 | Table t_user

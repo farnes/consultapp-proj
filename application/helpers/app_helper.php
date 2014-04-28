@@ -20,15 +20,19 @@ if(!function_exists('log_class_method')){
 	}
 }
 
-if(!function_exists('show_errors_app')){
-	function show_errors_app($errorMessage){
-		return;
+if(!function_exists('is_less_than_current')){
+	function is_less_than_current($date){		
+		return strtotime('now')>strtotime(str_replace('/', '-', $date));			
 	}
 }
 
-if(!function_exists('validate_errors_app')){
-	function validate_errors_app($errorMessage){
-		return;
+if(!function_exists('is_valid_date')){
+	function is_valid_date($date){		
+		$dateArray =  explode('/', $date);
+		return checkdate($dateArray[1],$dateArray[0],$dateArray[2]);
 	}
 }
+
+
+
 

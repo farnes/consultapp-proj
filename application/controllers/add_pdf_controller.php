@@ -25,13 +25,15 @@ class Add_pdf_controller extends CI_Controller {
 		$name_field = $this->input->post('name-field');
 		$date_field = $this->input->post('date-field');
 		
+		
 		$this->setRulesValidationForm();
-		if ($this->form_validation->run() == FALSE){
+		$isValidateOk = $this->form_validation->run();
+		if (!$isValidateOk){
 			$this->goAddForm();
 			return;
 		}
 		
-		$this->prepareFileConf($day_field, $month_field, $year_field, $code_field, $name_field);
+		$this->prepareFileConf($date_field, $code_field, $name_field);
 		$loadCorrectly = $this->upload->do_upload('upload-field');
 		if (!$loadCorrectly){
 			$this->goAddFormWithErrorMessage($this->upload->display_errors());				
@@ -44,9 +46,10 @@ class Add_pdf_controller extends CI_Controller {
 		log_class_method(LEVEL_DEBUG, $this->className, 'add.....Fin');
 	}
 	
-	private function prepareFileConf($day,$month,$year,$code,$name){
+	private function prepareFileConf($date,$code,$name){
 		
-		$folder = './uploads/pdf_files/'.$year.$month.$day.'/';
+		$dateArray =  explode('/', $date);
+		$folder = './uploads/pdf_files/'.$dateArray[2].$dateArray[1].$dateArray[0].'/';
 		if(!is_dir($folder))mkdir($folder, 0777, true);		
 		$this->uploadFileConf['upload_path'] = $folder;
 		$this->uploadFileConf['file_name'] = $code.'_'.$name;
@@ -54,6 +57,10 @@ class Add_pdf_controller extends CI_Controller {
 	}
 	
 	private function setRulesValidationForm(){
+				
+		$this->form_validation->set_message(
+				'checkdate',
+				'El campo %s es mayor a la actual o es inexistente');
 		$this->form_validation->set_rules(
 				'code-field', 'Codigo',
 				'trim|required');
@@ -62,8 +69,14 @@ class Add_pdf_controller extends CI_Controller {
 				'required');
 		$this->form_validation->set_rules(
 				'date-field', 'Fecha', 
-				'required|regex_match[#^[0-9]{2}/[0-9]{2}/[0-9]{4}$#]'
+				//'regex_match['.DATE_PATTERN.']|
+				'callback_checkdate'
 		);
+		
+	}
+	
+	public function checkdate($newdate){
+		return is_less_than_current($newdate)&&is_valid_date($newdate);		
 	}
 	
 	private function goAddForm(){
@@ -81,7 +94,4 @@ class Add_pdf_controller extends CI_Controller {
 		$this->load->view('success_view');		
 	}
 	
-	public function dummy(){
-		return;	
-	}
 }
