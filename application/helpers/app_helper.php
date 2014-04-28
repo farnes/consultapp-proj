@@ -28,11 +28,15 @@ if(!function_exists('is_less_than_current')){
 
 if(!function_exists('is_valid_date')){
 	function is_valid_date($date){		
-		$dateArray =  explode('/', $date);
+		$dateArray =  explode('/', isset($date)?$date:'00/00/0000');
 		return checkdate($dateArray[1],$dateArray[0],$dateArray[2]);
 	}
 }
 
-
+if(!function_exists('var_value')){
+	function var_value($valueToControl){
+		return isset($valueToControl)?$valueToControl:'';
+	}
+}
 
 

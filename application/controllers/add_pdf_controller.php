@@ -4,39 +4,42 @@ class Add_pdf_controller extends CI_Controller {
 	
 	private static $className;
 	private $uploadFileConf = array('allowed_types'=>'pdf|doc|docx','max_size' => '10240');
+	private $data = array('errorMessage'=>'','code'=>'','name'=>'','date'=>'');
 	
 	public function __construct(){
 		parent::__construct();
 		$this->className = $this->router->fetch_class();		
-		$this->load->library('upload');
+		$this->load->library('upload');		
 	}
 
 	public function index(){		
 		log_class_method(LEVEL_DEBUG, $this->className , 'index.....Inicio');
-		validateSession();
-		$this->goAddForm();
+		validateSession();						
+		$this->goAddForm($this->data);
 		log_class_method(LEVEL_DEBUG, $this->className , 'index.....Fin');
 	}
 	
 	public function add(){
 		log_class_method(LEVEL_DEBUG, $this->className, 'add.....Inicio');
 		validateSession();
-		$code_field = $this->input->post('code-field');
-		$name_field = $this->input->post('name-field');
-		$date_field = $this->input->post('date-field');
 		
+		$request = (object)$this->data;
+		$request->code = $this->input->post('code-field');
+		$request->name = $this->input->post('name-field');
+		$request->date = $this->input->post('date-field');
 		
 		$this->setRulesValidationForm();
 		$isValidateOk = $this->form_validation->run();
 		if (!$isValidateOk){
-			$this->goAddForm();
+			$this->goAddForm($request);
 			return;
-		}
+		}				
 		
-		$this->prepareFileConf($date_field, $code_field, $name_field);
+		$this->prepareFileConf($request);
 		$loadCorrectly = $this->upload->do_upload('upload-field');
 		if (!$loadCorrectly){
-			$this->goAddFormWithErrorMessage($this->upload->display_errors());				
+			$request->errorMessage = $this->upload->display_errors();
+			$this->goAddForm($request);				
 			return;
 		}
 		
@@ -46,13 +49,13 @@ class Add_pdf_controller extends CI_Controller {
 		log_class_method(LEVEL_DEBUG, $this->className, 'add.....Fin');
 	}
 	
-	private function prepareFileConf($date,$code,$name){
+	private function prepareFileConf($request){
 		
-		$dateArray =  explode('/', $date);
+		$dateArray =  explode('/', $request->date);
 		$folder = './uploads/pdf_files/'.$dateArray[2].$dateArray[1].$dateArray[0].'/';
 		if(!is_dir($folder))mkdir($folder, 0777, true);		
 		$this->uploadFileConf['upload_path'] = $folder;
-		$this->uploadFileConf['file_name'] = $code.'_'.$name;
+		$this->uploadFileConf['file_name'] = $request->code.'_'.$request->name;
 		$this->upload->initialize($this->uploadFileConf);
 	}
 	
@@ -69,24 +72,18 @@ class Add_pdf_controller extends CI_Controller {
 				'required');
 		$this->form_validation->set_rules(
 				'date-field', 'Fecha', 
-				//'regex_match['.DATE_PATTERN.']|
-				'callback_checkdate'
+				'required|regex_match['.DATE_PATTERN.']|callback_checkdate'
 		);
 		
 	}
 	
-	public function checkdate($newdate){
+	private function checkdate($newdate){
 		return is_less_than_current($newdate)&&is_valid_date($newdate);		
 	}
 	
-	private function goAddForm(){
+	private function goAddForm($data){
 		log_class_method(LEVEL_DEBUG, $this->className, 'goAddForm');
-		$this->load->view('add_pdf_view', array('errorMessage'=>''));
-	}
-	
-	private function goAddFormWithErrorMessage($message){
-		log_class_method(LEVEL_DEBUG, $this->className, 'goAddFormWithErrorMessage');
-		$this->load->view('add_pdf_view', array('errorMessage'=>$message));
+		$this->load->view('add_pdf_view', $data);
 	}
 	
 	private function goSuccess(){

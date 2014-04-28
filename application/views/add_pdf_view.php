@@ -6,14 +6,14 @@
 </head>
 <?php
 //valores por defecto
-$attr_form = array('name' => 'add-pdf-form', 'id' => 'add-pdf-form', 'method'=>'POST');
+$attr_form = array('name' => 'add-pdf-form', 'method'=>'POST');
 
-$attr_code = array('id' => 'code-field','name' => 'code-field','placeholder' => 'Codigo');
-$attr_name = array('id' => 'name-field','name' => 'name-field','placeholder' => 'Nombre');
-$attr_date = array('id' => 'date-field', 'name' => 'date-field', 'placeholder' => 'Fecha en dia/mes/a&#241;o');
+$attr_code = array('id' => 'code-field','name' => 'code-field','value' => $code,'placeholder' => 'Codigo');
+$attr_name = array('id' => 'name-field','name' => 'name-field','value' => $name,'placeholder' => 'Nombre');
+$attr_date = array('id' => 'date-field','name' => 'date-field', 'value' => $date, 'placeholder' => 'Fecha en dia/mes/a&#241;o');
 $attr_upload = array('id' => 'upload-field','name' => 'upload-field','value' => 'Seleccionar Archivo...');
 
-$attr_submit = array('id' => 'submit-button','name' => 'submit-button','value' => 'Guardar');
+$attr_submit = array('name' => 'submit-button','value' => 'Guardar');
 ?>
 <body>
 	<?php include 'menu.php';?>
