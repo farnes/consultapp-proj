@@ -28,7 +28,7 @@ if(!function_exists('is_less_than_current')){
 
 if(!function_exists('is_valid_date')){
 	function is_valid_date($date){		
-		$dateArray =  explode('/', isset($date)?$date:'00/00/0000');
+		$dateArray =  explode('/', $date);
 		return checkdate($dateArray[1],$dateArray[0],$dateArray[2]);
 	}
 }

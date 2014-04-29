@@ -77,7 +77,7 @@ class Add_pdf_controller extends CI_Controller {
 		
 	}
 	
-	private function checkdate($newdate){
+	public function checkdate($newdate){
 		return is_less_than_current($newdate)&&is_valid_date($newdate);		
 	}
 	
