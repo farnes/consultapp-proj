@@ -4,10 +4,11 @@ class Add_pdf_controller extends CI_Controller {
 	
 	private static $className;
 	private $uploadFileConf = array('allowed_types'=>'pdf|doc|docx','max_size' => '10240');
-	private $data = array('errorMessage'=>'','code'=>'','name'=>'','date'=>'');
+	private $entityData = array('dataMessage'=>'','code'=>'','name'=>'','date'=>'');
 	
 	public function __construct(){
 		parent::__construct();
+		log_class_method(LEVEL_DEBUG, $this->className, '__construct');
 		$this->className = $this->router->fetch_class();		
 		$this->load->library('upload');		
 	}
@@ -15,7 +16,7 @@ class Add_pdf_controller extends CI_Controller {
 	public function index(){		
 		log_class_method(LEVEL_DEBUG, $this->className , 'index.....Inicio');
 		validateSession();						
-		$this->goAddForm($this->data);
+		$this->goForm($this->entityData);
 		log_class_method(LEVEL_DEBUG, $this->className , 'index.....Fin');
 	}
 	
@@ -23,7 +24,7 @@ class Add_pdf_controller extends CI_Controller {
 		log_class_method(LEVEL_DEBUG, $this->className, 'add.....Inicio');
 		validateSession();
 		
-		$request = (object)$this->data;
+		$request = (object)$this->entityData;
 		$request->code = $this->input->post('code-field');
 		$request->name = $this->input->post('name-field');
 		$request->date = $this->input->post('date-field');
@@ -31,26 +32,39 @@ class Add_pdf_controller extends CI_Controller {
 		$this->setRulesValidationForm();
 		$isValidateOk = $this->form_validation->run();
 		if (!$isValidateOk){
-			$this->goAddForm($request);
+			$request->dataMessage = validation_errors();
+			$this->goForm($request);
 			return;
 		}				
 		
 		$this->prepareFileConf($request);
 		$loadCorrectly = $this->upload->do_upload('upload-field');
 		if (!$loadCorrectly){
-			$request->errorMessage = $this->upload->display_errors();
-			$this->goAddForm($request);				
+			$request->dataMessage = $this->upload->display_errors();
+			$this->goForm($request);				
 			return;
 		}
+	
+		$this->goForm($this->prepareSuccessData($request));
 		
-		$data = array('upload_data' => $this->upload->data());
-		
-		$this->goSuccess();
 		log_class_method(LEVEL_DEBUG, $this->className, 'add.....Fin');
 	}
 	
+	private function prepareSuccessData($success){
+		log_class_method(LEVEL_DEBUG, $this->className, 'prepareSuccessData');
+		$msg = 'El archivo se ha guardado con exito<br>';
+		foreach ($this->upload->data() as $key => $value){
+			$msg .= $key.' : '.$value.'<br>';
+		}		
+		$success->code = '';
+		$success->name = '';
+		$success->date = '';
+		$success->dataMessage = $msg;
+		return $success;
+	}
+	
 	private function prepareFileConf($request){
-		
+		log_class_method(LEVEL_DEBUG, $this->className, 'prepareFileConf');
 		$dateArray =  explode('/', $request->date);
 		$folder = './uploads/pdf_files/'.$dateArray[2].$dateArray[1].$dateArray[0].'/';
 		if(!is_dir($folder))mkdir($folder, 0777, true);		
@@ -60,7 +74,8 @@ class Add_pdf_controller extends CI_Controller {
 	}
 	
 	private function setRulesValidationForm(){
-				
+		log_class_method(LEVEL_DEBUG, $this->className, 'setRulesValidationForm');
+		$this->form_validation->set_error_delimiters('','<br>');
 		$this->form_validation->set_message(
 				'checkdate',
 				'El campo %s es mayor a la actual o es inexistente');
@@ -78,17 +93,13 @@ class Add_pdf_controller extends CI_Controller {
 	}
 	
 	public function checkdate($newdate){
+		log_class_method(LEVEL_DEBUG, $this->className, 'checkdate');
 		return is_less_than_current($newdate)&&is_valid_date($newdate);		
 	}
 	
-	private function goAddForm($data){
-		log_class_method(LEVEL_DEBUG, $this->className, 'goAddForm');
+	private function goForm($data){
+		log_class_method(LEVEL_DEBUG, $this->className, 'goForm');
 		$this->load->view('add_pdf_view', $data);
-	}
-	
-	private function goSuccess(){
-		log_class_method(LEVEL_DEBUG, $this->className, 'goSuccess');
-		$this->load->view('success_view');		
 	}
 	
 }

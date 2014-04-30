@@ -19,8 +19,7 @@ $attr_submit = array('name' => 'submit-button','value' => 'Guardar');
 	<?php include 'menu.php';?>
 		
 	<div id="error-container">
-		<?=validation_errors();?>
-		<p><?=$errorMessage;?></p>
+		<p><?=$dataMessage;?></p>
 	</div>
 	<div id="form-container">
 	<?=form_open_multipart(site_url().'add_pdf_controller/add' ,$attr_form);?>
