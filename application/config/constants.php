@@ -62,6 +62,7 @@ define('INFO_SESSION_LOGGIN_IN', 'loggin_in');
 define('INFO_SESSION_USER', 'mail');
 
 define('DATE_PATTERN', '#^[0-9]{2}/[0-9]{2}/[0-9]{4}$#');
+define('PDF_FILES_PATH','./uploads/pdf_files/');
 
 /*
 |--------------------------------------------------------------------------
@@ -72,11 +73,24 @@ define('DATE_PATTERN', '#^[0-9]{2}/[0-9]{2}/[0-9]{4}$#');
 |
 */
 
+
+//Tabla USER
 define('USER_TABLE', 't_user');
 define('USER_TABLE_FIELD_USER_PK', 'user_pk');
 define('USER_TABLE_FIELD_NAME', 'name_vc');
 define('USER_TABLE_FIELD_PASS', 'password_vc');
 define('USER_TABLE_FIELD_ROLE', 'role_int');
+
+//Tabla PDF_FILES
+define('PDF_TABLE', 't_pdf_files');
+define('PDF_TABLE_PDF_FILES_PK_FIELD', 'pdf_files_pk');
+define('PDF_TABLE_CODE_FIELD', 'code');
+define('PDF_TABLE_NAME_FIELD', 'name');
+define('PDF_TABLE_FULL_PATH_FIELD', 'full_path');
+define('PDF_TABLE_PDF_DATE_FIELD', 'pdf_date');
+define('PDF_TABLE_LOAD_DATE_FIELD', 'load_date');
+define('PDF_TABLE_ORIG_NAME_FIELD', 'orig_name');
+
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
