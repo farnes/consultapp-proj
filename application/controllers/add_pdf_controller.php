@@ -55,6 +55,8 @@ class Add_pdf_controller extends CI_Controller {
 	
 	private function saveData($dataInserted){
 		log_class_method(LEVEL_DEBUG, $this->className, 'saveData');
+		$dateArray =  explode('/', $dataInserted->date);
+		$dataInserted->date = $dateArray[2].'-'.$dateArray[1].'-'.$dateArray[0];
 		$idsaved = $this->Pdf_Files_Model->insertNewPdfFileData((object)$this->upload->data(),$dataInserted);
 		log_message(LEVEL_ERROR, 'ID '.$idsaved);
 	}
