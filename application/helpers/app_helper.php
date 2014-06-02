@@ -11,6 +11,12 @@ if(!function_exists('validateSession')){
 	}
 }
 
+if(!function_exists('is_null_or_empty_string')){
+	function is_null_or_empty_string($question){
+		return (!isset($question) || trim($question)==='');
+	}
+}
+
 if(!function_exists('log_class_method')){
 	function log_class_method($level,$nameClass,$nameMethod){		
 		log_message(
@@ -38,5 +44,14 @@ if(!function_exists('var_value')){
 		return isset($valueToControl)?$valueToControl:'';
 	}
 }
+
+if(!function_exists('date_format_for_db')){
+	function date_format_for_db($input_date){
+		$dateArray =  explode('/', $input_date);
+		return $dateArray[2].'-'.$dateArray[1].'-'.$dateArray[0];
+	}
+}
+
+
 
 

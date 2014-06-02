@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Add_pdf_controller extends CI_Controller {
+class Edit_pdf_controller extends CI_Controller {
 	
 	private static $className;
 	private $uploadFileConf = array('allowed_types'=>'pdf|doc|docx','max_size' => '10240');
@@ -15,14 +15,16 @@ class Add_pdf_controller extends CI_Controller {
 		$this->setRulesValidationForm();
 	}
 
-	public function index(){		
+	public function load($id_pdf_file){		
 		log_class_method(LEVEL_DEBUG, $this->className , 'index.....Inicio');
-		validateSession();						
-		$this->goForm($this->requestData);
+		validateSession();		
+		$requestDataArray = (array)$this->Pdf_Files_Model->getPdfFilesDataById($id_pdf_file);
+		$requestDataArray['dataMessage']= 'Cargado';
+		$this->goForm($requestDataArray);
 		log_class_method(LEVEL_DEBUG, $this->className , 'index.....Fin');
 	}
 	
-	public function add(){
+	public function edit(){
 		log_class_method(LEVEL_DEBUG, $this->className, 'add.....Inicio');
 		validateSession();
 		
@@ -109,7 +111,7 @@ class Add_pdf_controller extends CI_Controller {
 	
 	private function goForm($data){
 		log_class_method(LEVEL_DEBUG, $this->className, 'goForm');
-		$this->load->view('add_pdf_view', $data);
+		$this->load->view('edit_pdf_view', $data);
 	}
 	
 }

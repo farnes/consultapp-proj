@@ -6,15 +6,14 @@
 </head>
 <?php
 //valores por defecto
-$attr_form = array('name' => 'search-pdf-form', 'method'=>'POST');
+$attr_form = array('name' => 'edit-pdf-form', 'method'=>'POST');
 
 $attr_code = array('id' => 'code-field','name' => 'code-field','value' => $code,'placeholder' => 'Codigo');
 $attr_name = array('id' => 'name-field','name' => 'name-field','value' => $name,'placeholder' => 'Nombre');
-$attr_start_date = array('id' => 'start-date-field','name' => 'start-date-field', 'value' => $startDate, 'placeholder' => 'Fecha Inicio dia/mes/a&#241;o');
-$attr_end_date = array('id' => 'end-date-field','name' => 'end-date-field', 'value' => $endDate, 'placeholder' => 'Fecha Fin dia/mes/a&#241;o');
+$attr_date = array('id' => 'date-field','name' => 'date-field', 'value' => $pdf_date, 'placeholder' => 'Fecha en dia/mes/a&#241;o');
+$attr_upload = array('id' => 'upload-field','name' => 'upload-field','value' => $full_path);
 
-$attr_submit = array('name' => 'submit-button','value' => 'Buscar');
-$attr_clean = array('clean' => 'submit-button','value' => 'Limpiar');
+$attr_submit = array('name' => 'submit-button','value' => 'Guardar');
 ?>
 <body>
 	<?php include 'menu.php';?>
@@ -23,7 +22,7 @@ $attr_clean = array('clean' => 'submit-button','value' => 'Limpiar');
 		<p><?=$dataMessage;?></p>
 	</div>
 	<div id="form-container">
-	<?=form_open(site_url().'search_pdf_controller/search' ,$attr_form);?>
+	<?=form_open_multipart(site_url().'edit_pdf_controller/edit' ,$attr_form);?>
 		<div>
 		<?=form_input($attr_code);?>
 		</div>
@@ -31,19 +30,15 @@ $attr_clean = array('clean' => 'submit-button','value' => 'Limpiar');
 		<?=form_input($attr_name);?>
 		</div>
 		<div>
-		<?=form_input ($attr_start_date);?>
+		<?=form_input ($attr_date);?>
 		</div>
 		<div>
-		<?=form_input ($attr_end_date);?>
-		</div>	
+		<?=form_upload($attr_upload);?>
+		</div>		
 		<div>
 		<?=form_submit($attr_submit);?>
 		</div>
-		<div>
-		<?=form_submit($attr_clean);?>
-		</div>
 	<?=form_close();?>
-	</div>	
-	<?=$dataGrid;?>
+	</div>
 </body>
 </html> 

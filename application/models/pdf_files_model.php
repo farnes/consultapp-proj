@@ -18,4 +18,23 @@ class Pdf_Files_Model extends CI_Model {
 		$this->db->insert(PDF_TABLE,$newRow);
 	}
 	
+	public function getPdfFilesData(){
+		$query = $this->db
+			->select()
+			->from(PDF_TABLE)
+		->get();	
+		return $query->result();
+	}
+	
+	public function getPdfFilesDataById($id){
+		$filter = array(
+				PDF_TABLE_PDF_FILES_PK_FIELD => $id
+		);
+		$query = $this->db
+			->select()
+			->from(PDF_TABLE)
+			->where($filter)
+		->get();
+		return $query->row();
+	}
 }
