@@ -18,10 +18,25 @@ class Pdf_Files_Model extends CI_Model {
 		$this->db->insert(PDF_TABLE,$newRow);
 	}
 	
-	public function getPdfFilesData(){
+	public function getPdfFilesData($data){
+		
+		$filter = array();		
+		if(!is_null_or_empty($data->code))$filter[PDF_TABLE_CODE_FIELD]=$data->code;
+		if(!is_null_or_empty($data->name))$filter[PDF_TABLE_NAME_FIELD]=$data->name;
+		
+		/* $start=is_null_or_empty($data->startDate);
+		$end=is_null_or_empty($data->endDate);
+		if($start&&$end){
+			
+		} */
+		
+		if(!is_null_or_empty($data->startDate))$filter[PDF_TABLE_PDF_DATE_FIELD.' >=']=date_format_for_db($data->startDate);
+		if(!is_null_or_empty($data->endDate))$filter[PDF_TABLE_PDF_DATE_FIELD.' <=']=date_format_for_db($data->endDate);
+		
 		$query = $this->db
 			->select()
 			->from(PDF_TABLE)
+			->where($filter)
 		->get();	
 		return $query->result();
 	}
@@ -36,5 +51,15 @@ class Pdf_Files_Model extends CI_Model {
 			->where($filter)
 		->get();
 		return $query->row();
+	}
+	
+	public function updatePdfFileData($dataForUpdate){
+		$data = array(
+				PDF_TABLE_CODE_FIELD => $dataForUpdate->code,
+				PDF_TABLE_NAME_FIELD => $dataForUpdate->name,
+				PDF_TABLE_PDF_DATE_FIELD => $dataForUpdate->date,
+		);
+		$this->db->where(PDF_TABLE_PDF_FILES_PK_FIELD, $dataForUpdate->id_pdf_file);
+		$this->db->update(PDF_TABLE, $data);
 	}
 }

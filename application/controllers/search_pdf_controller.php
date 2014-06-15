@@ -39,7 +39,7 @@ class Search_pdf_controller extends CI_Controller {
 		
 		$request->dataMessage = '';
 		
-		$request->dataGrid = $this->prepareGrid($this->Pdf_Files_Model->getPdfFilesData());
+		$request->dataGrid = $this->prepareGrid($this->Pdf_Files_Model->getPdfFilesData($request));
 		$this->goForm($request);
 		
 		log_class_method(LEVEL_DEBUG, $this->className , 'search.....Fin');
@@ -75,7 +75,7 @@ class Search_pdf_controller extends CI_Controller {
 	
 	public function checkdate($newdate){
 		log_class_method(LEVEL_DEBUG, $this->className, 'checkdate');		
-		return is_null_or_empty_string($newdate)?true:is_less_than_current($newdate)&&is_valid_date($newdate);
+		return is_null_or_empty($newdate)?true:is_less_than_current($newdate)&&is_valid_date($newdate);
 	}
 	
 	private function goForm($data){

@@ -11,8 +11,8 @@ if(!function_exists('validateSession')){
 	}
 }
 
-if(!function_exists('is_null_or_empty_string')){
-	function is_null_or_empty_string($question){
+if(!function_exists('is_null_or_empty')){
+	function is_null_or_empty($question){
 		return (!isset($question) || trim($question)==='');
 	}
 }
@@ -49,6 +49,13 @@ if(!function_exists('date_format_for_db')){
 	function date_format_for_db($input_date){
 		$dateArray =  explode('/', $input_date);
 		return $dateArray[2].'-'.$dateArray[1].'-'.$dateArray[0];
+	}
+}
+
+if(!function_exists('date_format_for_app')){
+	function date_format_for_app($input_date){
+		$dateArray =  explode('-', $input_date);
+		return $dateArray[2].'/'.$dateArray[1].'/'.$dateArray[0];
 	}
 }
 
