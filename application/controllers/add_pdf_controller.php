@@ -76,10 +76,10 @@ class Add_pdf_controller extends CI_Controller {
 	private function prepareFileConf($request){
 		log_class_method(LEVEL_DEBUG, $this->className, 'prepareFileConf');
 		$dateArray =  explode('/', $request->date);
-		$folder = PDF_FILES_PATH.$dateArray[2].$dateArray[1].$dateArray[0].'/';
-		if(!is_dir($folder))mkdir($folder, 0777, true);		
-		$this->uploadFileConf['upload_path'] = $folder;
-		$this->uploadFileConf['file_name'] = $request->code.'_'.$request->name;
+		//$folder = PDF_FILES_PATH.$dateArray[2].$dateArray[1].$dateArray[0].'/';
+		//if(!is_dir($folder))mkdir($folder, 0777, true);		
+		$this->uploadFileConf['upload_path'] = PDF_FILES_PATH;
+		$this->uploadFileConf['file_name'] = $dateArray[2].$dateArray[1].$dateArray[0].'_'.$request->code.'_'.$request->name;
 		$this->upload->initialize($this->uploadFileConf);
 	}
 	

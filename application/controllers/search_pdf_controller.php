@@ -48,7 +48,9 @@ class Search_pdf_controller extends CI_Controller {
 	private function prepareGrid($result){
 		$this->table->set_heading('Accion','Codigo', 'Nombre', 'Fecha', 'Ubicacion');
 		foreach ($result as $row){
-			$this->table->add_row('<a href="'.site_url().'edit_pdf_controller/'.$row->pdf_files_pk.'">Editar</a>',$row->code,$row->name,$row->pdf_date,$row->full_path);
+			$this->table->add_row('<a href="'.site_url().'edit_pdf_controller/load/'.$row->pdf_files_pk.'">Editar</a>',
+					              $row->code,$row->name,$row->pdf_date,
+								  '<a href="'.site_url().PDF_FILES_PATH.$row->full_path.'">'.PDF_FILES_PATH.$row->full_path.'</a>');
 		}
 		return $this->table->generate();
 	}

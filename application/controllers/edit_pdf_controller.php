@@ -4,7 +4,7 @@ class Edit_pdf_controller extends CI_Controller {
 	
 	private static $className;
 	private $uploadFileConf = array('allowed_types'=>'pdf|doc|docx','max_size' => '10240');
-	private $requestData = array('dataMessage'=>'','id_pdf_file' => '','code'=>'','name'=>'','pdf_date'=>'');
+	private $requestData = array('dataMessage'=>'','id_pdf_file' => '','code'=>'','name'=>'','pdf_date'=>'', 'full_path'=>'');
 	
 	public function __construct(){
 		parent::__construct();
@@ -26,14 +26,15 @@ class Edit_pdf_controller extends CI_Controller {
 	}
 	
 	public function edit(){
-		log_class_method(LEVEL_DEBUG, $this->className, 'add.....Inicio');
+		log_class_method(LEVEL_DEBUG, $this->className, 'edit.....Inicio');
 		validateSession();
 		
 		$request = (object)$this->requestData;
 		$request->code = $this->input->post('code-field');
 		$request->name = $this->input->post('name-field');
 		$request->date = $this->input->post('date-field');
-		$request->id_pdf_file = $this->input->post('id-field');
+		$request->id_pdf_file = $this->input->post('id-hidden-field');
+		$request->full_path = $this->input->post('path-hidden-field');
 				
 		$isValidateOk = $this->form_validation->run();
 		if (!$isValidateOk){
@@ -41,11 +42,19 @@ class Edit_pdf_controller extends CI_Controller {
 			return $this->goForm($request);
 		}
 		
-		$this->modifyData($request);
+		$this->renameFile($request);
+		$this->modifyData($request);		
 	
 		$this->load($request->id_pdf_file);
 		
-		log_class_method(LEVEL_DEBUG, $this->className, 'add.....Fin');
+		log_class_method(LEVEL_DEBUG, $this->className, 'edit.....Fin');
+	}
+	
+	private function renameFile($request){
+		$dateArray =  explode('/', $request->date);
+		$new_name = $dateArray[2].$dateArray[1].$dateArray[0].'_'.$request->code.'_'.$request->name.'.'.explode('.', $request->full_path)[1];
+		rename(PDF_FILES_PATH.$request->full_path, PDF_FILES_PATH.$new_name);
+		$request->full_path=$new_name;	
 	}
 	
 	private function modifyData($dataUpdated){
